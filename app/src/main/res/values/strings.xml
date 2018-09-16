@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">HealthyApp</string>
+    <string name="user_id">User ID</string>
+<string name="password">Password</string>
+<string name="btn_login">LOGIN</string>
+<string name="btn_register">Register New Account</string>
+<string name="name">Name</string>
+<string name="age">Age</string>
+<string name="height">Height(cm)</string>
+<string name="weight">Weight(kg)</string>
+<string name="btn_calculate">CALCULATE</string>
+</resources>

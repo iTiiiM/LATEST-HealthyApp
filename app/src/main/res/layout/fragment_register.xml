@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:id="@+id/fragment_register_view"
+        android:layout_height="match_parent">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:padding="35dp"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/register_email"
+                    android:drawableLeft="@drawable/ic_person"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/user_id"
+                    android:inputType="textPersonName" />
+
+                <EditText
+                    android:id="@+id/register_password"
+                    android:layout_width="match_parent"
+                    android:drawableLeft="@drawable/ic_lock"
+                    android:hint="@string/name"
+                    android:inputType="text"
+                    android:layout_height="wrap_content" />
+
+                <EditText
+                    android:id="@+id/register_repassword"
+                    android:layout_width="match_parent"
+                    android:drawableLeft="@drawable/ic_lock"
+                    android:hint="@string/age"
+                    android:inputType="number"
+                    android:layout_height="wrap_content" />
+
+
+
+                <Button
+                    android:id="@+id/register_register_btn"
+                    android:text="@string/btn_register"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+        </ScrollView>
+    </FrameLayout>
+
+</android.support.constraint.ConstraintLayout>
