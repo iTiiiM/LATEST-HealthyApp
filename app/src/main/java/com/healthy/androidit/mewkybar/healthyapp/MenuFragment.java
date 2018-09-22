@@ -12,6 +12,8 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+
+import com.google.firebase.auth.FirebaseAuth;
 import com.healthy.androidit.mewkybar.healthyapp.R;
 
 import com.healthy.androidit.mewkybar.healthyapp.Weight.WeightFragment;
@@ -19,7 +21,7 @@ import com.healthy.androidit.mewkybar.healthyapp.Weight.WeightFragment;
 import java.util.ArrayList;
 
 public class MenuFragment extends Fragment {
-
+    FirebaseAuth mAuth;
     ArrayList<String> _menu = new ArrayList<>();
 
     @Override
@@ -27,8 +29,8 @@ public class MenuFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         _menu.add("BMI");
         _menu.add("Weight");
-        _menu.add("Setup");
-        Button _backBtn = getView().findViewById(R.id.menu_back_btn);
+        _menu.add("Logout");
+
 
         ArrayAdapter<String> _menuAdapter = new ArrayAdapter<>(
                 getActivity(),
@@ -51,18 +53,18 @@ public class MenuFragment extends Fragment {
                     getActivity().getSupportFragmentManager()
                             .beginTransaction().replace(R.id.main_view, new WeightFragment())
                             .commit();
+                }else if(_menu.get(i) == "Logout"){
+                    mAuth = FirebaseAuth.getInstance();
+                    mAuth.signOut();
+
+                    getActivity().getSupportFragmentManager()
+                            .beginTransaction().replace(R.id.main_view, new LoginFragment())
+                            .commit();
                 }
             }
         });
 
-        _backBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                getActivity().getSupportFragmentManager()
-                        .beginTransaction().replace(R.id.main_view, new LoginFragment())
-                        .commit();
-            }
-        });
+
     }
 
     @Nullable

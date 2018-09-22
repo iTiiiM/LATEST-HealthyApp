@@ -2,12 +2,12 @@ package com.healthy.androidit.mewkybar.healthyapp.Weight;
 
 public class Weight {
     String date;
-    int weight;
+    float weight;
     String status;
 
     public Weight(){}
 
-    public Weight(String date, int weight, String status){
+    public Weight(float weight, String date, String status){
 
         this.date = date;
         this.weight = weight;
@@ -22,11 +22,11 @@ public class Weight {
         this.date = date;
     }
 
-    public int getWeight() {
+    public float getWeight() {
         return weight;
     }
 
-    public void setWeight(int weight) {
+    public void setWeight(float weight) {
         this.weight = weight;
     }
 

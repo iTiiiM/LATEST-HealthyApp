@@ -13,7 +13,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class BMIFragment extends Fragment {
+public class    BMIFragment extends Fragment {
 
     @Nullable
     @Override

@@ -36,7 +36,7 @@ public class WeightAdapter extends ArrayAdapter<Weight> {
 
         Weight _row = weights.get(position);
         _date.setText(_row.getDate());
-        _weights.setText(_row.getWeight());
+        _weights.setText(_row.getWeight() + "KG");
 
         return _weightItem;
     }

@@ -7,31 +7,64 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ListView;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.healthy.androidit.mewkybar.healthyapp.R;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 
 public class WeightFragment extends Fragment {
+    private String uid;
+    private FirebaseAuth _user = FirebaseAuth.getInstance();
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-    ArrayList<Weight> weights = new ArrayList<>();
-
+    ArrayList<Weight> weights = new ArrayList<Weight>();
+    private DocumentSnapshot doc;
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        weights.add(new Weight("01 Jan 2018", 63, "UP"));
-        weights.add(new Weight("08 Jul 2008", 70 , "UP"));
-        weights.add(new Weight("09 Aug 2009", 80 ,"UP"));
 
-        ListView _weightList = getView().findViewById(R.id.weight_list);
-        WeightAdapter _weightAdapter = new WeightAdapter(
+        this.uid = _user.getUid();
+        final ListView _weightList = getView().findViewById(R.id.weight_list);
+        final WeightAdapter _weightAdapter = new WeightAdapter(
                 getActivity(),
                 R.layout.fragment_weight_item,
                 weights
         );
+        Button addWeightButton = (Button) getView().findViewById(R.id.add_weight_button);
+    addWeightButton.setOnClickListener(new View.OnClickListener(){
+        @Override
+        public void onClick(View view) {
+            getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.main_view,
+                    new WeightForm()).commit();
+
+        }
+    });
         _weightList.setAdapter(_weightAdapter);
 
+
+        db.collection("myfitness").document(uid).collection("weight").get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if(task.isSuccessful()){
+                            for(DocumentSnapshot document : task.getResult()){
+                                weights.add(document.toObject(Weight.class));
+                            }
+                        }
+                        updateStatusToFirestore(weights);
+
+                        }
+                    });
 
 //        _weight.add("64");
 //        _weight.add("80");
@@ -46,6 +79,16 @@ public class WeightFragment extends Fragment {
 //        ListView _weightList = (ListView) getView().findViewById(R.id.weight_list);
 //        _weightList.setAdapter(_weightAdapter);
 
+    }
+
+    private void updateStatusToFirestore(ArrayList<Weight> weights){
+        uid = _user.getUid().toString();
+        this.weights = weights;
+        int index = 0;
+        for(Weight items: this.weights){
+            db.collection("myfitness").document(uid).collection("weight")
+                    .document(items.getDate()).set(this.weights.get(index++));
+        }
     }
 
     @Nullable
