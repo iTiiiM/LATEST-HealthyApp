@@ -62,6 +62,7 @@ public class WeightFragment extends Fragment {
                             }
                         }
                         updateStatusToFirestore(weights);
+                        _weightAdapter.notifyDataSetChanged();
 
                         }
                     });
