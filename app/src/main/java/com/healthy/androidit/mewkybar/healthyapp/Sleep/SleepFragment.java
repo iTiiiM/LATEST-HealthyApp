@@ -17,6 +17,7 @@ import android.widget.ListView;
 
 import com.healthy.androidit.mewkybar.healthyapp.R;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 public class SleepFragment extends Fragment{
@@ -44,7 +45,12 @@ public class SleepFragment extends Fragment{
         backBtn.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-                getFragmentManager().popBackStack();
+                getActivity()
+                        .getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.main_view, new AddSleepFragment())
+                        .addToBackStack(null)
+                        .commit();
             }
         });
 
@@ -72,7 +78,8 @@ public class SleepFragment extends Fragment{
     public void getAndShowData(){
         Cursor cursor = myDB.rawQuery("select id, date, toBedTime, awakeTime from sleep", null);
         final ArrayList<Sleep> sleepList = new ArrayList<>();
-        while (cursor.moveToNext()) {
+        while(cursor.moveToNext())
+        {
             int id = cursor.getInt(0);
             String date = cursor.getString(1);
             String toBedTime = cursor.getString(2);
@@ -85,23 +92,25 @@ public class SleepFragment extends Fragment{
             sleepList.add(sleep);
         }
         cursor.close();
-        final ListView sleepListView = (ListView) getView().findViewById(R.id.sleep_list);
+
+        ListView sleepListView = getView().findViewById(R.id.sleep_list);
         SleepAdapter sleepAdapter = new SleepAdapter(getActivity(), R.layout.fragment_sleep_list_item, sleepList);
         sleepListView.setAdapter(sleepAdapter);
         sleepListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Bundle bundle = new Bundle();
-                bundle.putSerializable("sleep object", sleepList.get(position);
-                android.support.v4.app.Fragment addSleepFragment = new AddSleepFragment();
+                bundle.putSerializable("sleep object", (Serializable)sleepList.get(position));
+                Fragment addSleepFragment = new AddSleepFragment();
                 addSleepFragment.setArguments(bundle);
-                android.support.v4.app.FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+                FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
                 ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
                 ft.replace(R.id.main_view, addSleepFragment).addToBackStack(null).commit();
             }
         });
 
     }
+
 
     @Nullable
     @Override
