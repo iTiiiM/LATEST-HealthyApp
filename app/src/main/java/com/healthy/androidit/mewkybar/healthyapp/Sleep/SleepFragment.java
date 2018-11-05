@@ -15,6 +15,7 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 
+import com.healthy.androidit.mewkybar.healthyapp.MenuFragment;
 import com.healthy.androidit.mewkybar.healthyapp.R;
 
 import java.io.Serializable;
@@ -48,7 +49,7 @@ public class SleepFragment extends Fragment{
                 getActivity()
                         .getSupportFragmentManager()
                         .beginTransaction()
-                        .replace(R.id.main_view, new AddSleepFragment())
+                        .replace(R.id.main_view, new MenuFragment())
                         .addToBackStack(null)
                         .commit();
             }
@@ -100,7 +101,7 @@ public class SleepFragment extends Fragment{
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Bundle bundle = new Bundle();
-                bundle.putSerializable("sleep object", (Serializable)sleepList.get(position));
+                bundle.putSerializable("sleep object", sleepList.get(position));
                 Fragment addSleepFragment = new AddSleepFragment();
                 addSleepFragment.setArguments(bundle);
                 FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();

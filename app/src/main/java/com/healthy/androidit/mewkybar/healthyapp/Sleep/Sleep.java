@@ -1,6 +1,8 @@
 package com.healthy.androidit.mewkybar.healthyapp.Sleep;
 
-public class Sleep {
+import java.io.Serializable;
+
+public class Sleep implements Serializable {
     private int id;
     private String date;
     private String toBedTime;
