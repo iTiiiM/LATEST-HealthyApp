@@ -10,12 +10,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ListView;
 
 import com.google.firebase.auth.FirebaseAuth;
-import com.healthy.androidit.mewkybar.healthyapp.R;
 
+import com.healthy.androidit.mewkybar.healthyapp.Sleep.SleepFragment;
 import com.healthy.androidit.mewkybar.healthyapp.Weight.WeightFragment;
 
 import java.util.ArrayList;
@@ -29,7 +28,9 @@ public class MenuFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         _menu.add("BMI");
         _menu.add("Weight");
+        _menu.add("Sleep");
         _menu.add("Logout");
+
 
 
         ArrayAdapter<String> _menuAdapter = new ArrayAdapter<>(
@@ -59,6 +60,10 @@ public class MenuFragment extends Fragment {
 
                     getActivity().getSupportFragmentManager()
                             .beginTransaction().replace(R.id.main_view, new LoginFragment())
+                            .commit();
+                }else if(_menu.get(i) == "Sleep"){
+                    getActivity().getSupportFragmentManager()
+                            .beginTransaction().replace(R.id.main_view, new SleepFragment())
                             .commit();
                 }
             }
