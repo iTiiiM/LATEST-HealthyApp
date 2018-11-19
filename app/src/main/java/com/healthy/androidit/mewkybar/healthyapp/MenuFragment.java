@@ -29,6 +29,7 @@ public class MenuFragment extends Fragment {
         _menu.add("BMI");
         _menu.add("Weight");
         _menu.add("Sleep");
+        _menu.add("Post");
         _menu.add("Logout");
 
 
@@ -64,6 +65,10 @@ public class MenuFragment extends Fragment {
                 }else if(_menu.get(i) == "Sleep"){
                     getActivity().getSupportFragmentManager()
                             .beginTransaction().replace(R.id.main_view, new SleepFragment())
+                            .commit();
+                }else if(_menu.get(i) == "Post"){
+                    getActivity().getSupportFragmentManager()
+                            .beginTransaction().replace(R.id.main_view, new PostFragment())
                             .commit();
                 }
             }
